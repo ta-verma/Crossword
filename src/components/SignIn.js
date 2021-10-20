@@ -10,7 +10,7 @@ export default function SignIn() {
 
     const login = (e) => {
         e.preventDefault()
-        axios.post("http://crossw-server.herokuapp.com/signin", {
+        axios.post("https://crossw-server.herokuapp.com/signin", {
             username: username,
             password: password
         }).then((response) => {
@@ -28,7 +28,7 @@ export default function SignIn() {
         if (isAuthenticated) {
             window.location.pathname = "/dashboard";
         }
-        axios.get("http://crossw-server.herokuapp.com/signin").then((response) => {
+        axios.get("https://crossw-server.herokuapp.com/signin").then((response) => {
             if (response.data.loggedIn === true) {
             }
         });
@@ -74,7 +74,7 @@ export default function SignIn() {
                                 </a>
                             </div>
                             <div className="d-flex justify-content-center my-3">
-                            <Link to="/signup" class="link-dark">You don&#x27;t have an account?</Link>
+                            <Link to="/signup" className="link-dark">You don&#x27;t have an account?</Link>
                             </div>
                         </form>
                     </div>

@@ -12,7 +12,7 @@ export default function SignUp() {
 
     const register = (e) => {
         e.preventDefault()
-        axios.post("http://crossw-server.herokuapp.com/signup", {
+        axios.post("https://crossw-server.herokuapp.com/signup", {
             username: username,
             user: user,
             email: email,
@@ -41,7 +41,7 @@ export default function SignUp() {
                                     <form>
 
                                         <div className="form-outline mb-4">
-                                            <input type="text" id="form3Example1cg" onChange={(e) => { setUser(e.target.value) }} placeholder="Name" className="form-control form-control-lg" />
+                                            <input type="text" id="form3Example1cg6" onChange={(e) => { setUser(e.target.value) }} placeholder="Name" className="form-control form-control-lg" />
                                         </div>
 
                                         <div className="form-outline mb-4">
