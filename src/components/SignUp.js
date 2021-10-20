@@ -12,7 +12,7 @@ export default function SignUp() {
 
     const register = (e) => {
         e.preventDefault()
-        axios.post("https://crossw-server.herokuapp.com/signup", {
+        axios.post("http://localhost:3001/signup", {
             username: username,
             user: user,
             email: email,
