@@ -10,7 +10,7 @@ export default function SignIn() {
 
     const login = (e) => {
         e.preventDefault()
-        axioshttps:"//crossw-server.herokuapp.com/signin", {
+       axios.post("https://crossw-server.herokuapp.com/signin", {
             username: username,
             password: password
         }).then((response) => {
