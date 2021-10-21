@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { DrawCrossWord } from './drawCrossword/draw'
-import jsPdf from 'jspdf'
-import domtoimage from 'dom-to-image';
-
-
+import jsPDF from "jspdf";
 export default function Generate() {
     const [data, setdata] = useState("")
     // const [wordList, setWordList] = useState([])
@@ -26,30 +23,13 @@ export default function Generate() {
     const generateRandom = () => {
         DrawCrossWord()
     }
-
-
-
-    const generatePDF = () => {
-        const node = document.querySelector(".crossword");
-        document.querySelector(".crossword-buttons").style.visibility = 'hidden'
-        //document.querySelector(".table.crossword-grid").style.max = 'hidden'
-        domtoimage.toPng(node)
-        .then(function (dataUrl) {
-            var img = new Image();
-            img.src = dataUrl;
-            const pdf = new jsPdf("p", "mm", "a4");
-            var width = pdf.internal.pageSize.getWidth();
-            var height = pdf.internal.pageSize.getHeight();
-
-            pdf.addImage(img, 'PNG', 0, 0, width, height);
-            pdf.save("mycross.pdf");
+    let generatePDF = () => {
+        var doc = new jsPDF("p", "pt", "a4");
+        doc.html(document.querySelector(".crossword"), {
+            callback: function (pdf) {
+                pdf.save("mycross.pdf");
+            }
         })
-        .catch(function (error) {
-            console.error('oops, something went wrong!', error);
-        });
-        setTimeout(() => {
-            document.querySelector(".crossword-buttons").style.visibility = 'visible'
-        });
     }
     return (
         <>
@@ -63,7 +43,7 @@ export default function Generate() {
                     Generate Random
                 </button>
                 <button onClick={generatePDF} class="btn btn-outline-primary mx-5 mt-5" type="button">
-                    Save as Pdf
+                    save as PDF
                 </button>
                 <div>
                     <div class="crossword"> </div>

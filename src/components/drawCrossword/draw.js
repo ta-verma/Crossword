@@ -61,7 +61,6 @@ export const DrawCrossWord = (data=selected) => {
         })
     }
 
-    console.log(words)
     // Set global variables
     var gridSize = [wordss["width"] + 1, wordss["length"] + 1];     // number of squares wide, number of squares tall
     var direction = 'across';   // set initial direction to 'across'
@@ -70,7 +69,7 @@ export const DrawCrossWord = (data=selected) => {
     // var $clueTooltip = $('<div class="clue-tooltip invisible"><div class="clue-tooltip-arrow"></div><div class="clue-tooltip-text"></div></div>').appendTo('.crossword');
 
     // set up the base grid
-    var $crosswordPuzzle = $('<div class="crossword-puzzle"></div>');
+    var $crosswordPuzzle = $('<div class="crossword-puzzle col-md-8 col-lg-9"></div>');
     var $table = $('<table class="crossword-grid"></table>');
     for (i = 0; i < gridSize[1]; i++) {
         var $row = $('<tr class="grid-row"></tr>');
@@ -127,9 +126,9 @@ export const DrawCrossWord = (data=selected) => {
     }
 
     // Add the clues to the page
-    var $crosswordClues = $('<div class="crossword-clues col-md-12 col-lg-12"><div class="row"></div></div>');
-    var $acrossClues = $('<div class="across-clues col-sm-6 col-md-6"><p><strong>Across</strong></p><ol></ol></div>');
-    var $downClues = $('<div class="down-clues col-sm-6 col-md-6"><p><strong>Down</strong></p><ol></ol></div>');
+    var $crosswordClues = $('<div class="crossword-clues col-md-4 col-lg-3"><div class="row"></div></div>');
+    var $acrossClues = $('<div class="across-clues col-sm-6 col-md-12"><p><strong>Across</strong></p><ol></ol></div>');
+    var $downClues = $('<div class="down-clues col-sm-6 col-md-12"><p><strong>Down</strong></p><ol></ol></div>');
     for (i = 0; i < words.length; i++) {
         var $clue = $('<li value="' + words[i].number + '" data-direction="' + words[i].direction + '" data-clue="' + words[i].number + '"><label>' + words[i].clue + ' </label></li>');
         $clue.find('label').attr('for', $('[data-' + words[i].direction + '=' + words[i].number + ']').eq(0).attr('id'));
