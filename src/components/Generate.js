@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { DrawCrossWord } from './drawCrossword/draw'
-
+import jsPDF from "jspdf";
 export default function Generate() {
     const [data, setdata] = useState("")
     // const [wordList, setWordList] = useState([])
@@ -23,7 +23,14 @@ export default function Generate() {
     const generateRandom = () => {
         DrawCrossWord()
     }
-
+    let generatePDF = () => {
+        var doc = new jsPDF("p", "pt", "a4");
+        doc.html(document.querySelector(".crossword"), {
+            callback: function (pdf) {
+                pdf.save("mycross.pdf");
+            }
+        })
+    }
     return (
         <>
             <div class="container" style={{ paddingTop: "300px", paddingBottom: "300px" }}>
@@ -34,6 +41,9 @@ export default function Generate() {
                 </button>
                 <button onClick={generateRandom} class="btn btn-outline-primary mx-5 mt-5" type="button">
                     Generate Random
+                </button>
+                <button onClick={generatePDF} class="btn btn-outline-primary mx-5 mt-5" type="button">
+                    save as PDF
                 </button>
                 <div>
                     <div class="crossword"> </div>
