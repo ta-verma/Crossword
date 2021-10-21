@@ -29,7 +29,7 @@ export default function Generate() {
 
 
 
-    const savePdf = () => {
+    const generatePDF = () => {
         const node = document.querySelector(".crossword");
         document.querySelector(".crossword-buttons").style.visibility = 'hidden'
         //document.querySelector(".table.crossword-grid").style.max = 'hidden'
@@ -42,7 +42,7 @@ export default function Generate() {
             var height = pdf.internal.pageSize.getHeight();
 
             pdf.addImage(img, 'PNG', 0, 0, width, height);
-            pdf.save("download.pdf");
+            pdf.save("mycross.pdf");
         })
         .catch(function (error) {
             console.error('oops, something went wrong!', error);
@@ -62,8 +62,8 @@ export default function Generate() {
                 <button onClick={generateRandom} class="btn btn-outline-primary mx-5 mt-5" type="button">
                     Generate Random
                 </button>
-                <button onClick={savePdf} class="btn btn-outline-primary mx-5 mt-5" type="button">
-                    Save Pdf
+                <button onClick={generatePDF} class="btn btn-outline-primary mx-5 mt-5" type="button">
+                    Save as Pdf
                 </button>
                 <div>
                     <div class="crossword"> </div>
