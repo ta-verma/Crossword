@@ -44,6 +44,7 @@ let selected = shuffled.slice(0, Math.random() * (shuffled.length - 5) + 5);
 
 
 export const DrawCrossWord = (data=selected) => {
+    $(".crossword").empty();
     var wordss = Crossword(data);
     var wordslist = wordss.location;
 
@@ -60,7 +61,6 @@ export const DrawCrossWord = (data=selected) => {
         })
     }
 
-    console.log(words)
     // Set global variables
     var gridSize = [wordss["width"] + 1, wordss["length"] + 1];     // number of squares wide, number of squares tall
     var direction = 'across';   // set initial direction to 'across'
