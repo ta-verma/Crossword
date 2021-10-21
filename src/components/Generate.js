@@ -23,12 +23,22 @@ export default function Generate() {
     const generateRandom = () => {
         DrawCrossWord()
     }
-    let generatePDF = () => {
-        var doc = new jsPDF("p", "pt", "a4");
-        doc.html(document.querySelector(".crossword"), {
-            callback: function (pdf) {
-                pdf.save("mycross.pdf");
-            }
+
+    const generatePDF = () => {
+        const node = document.querySelector(".crossword");
+        document.querySelector(".crossword-buttons").style.visibility = 'hidden'
+        //document.querySelector(".table.crossword-grid").style.max = 'hidden'
+        domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            const pdf = new jsPdf("p", "mm", "a4");
+            var width = pdf.internal.pageSize.getWidth();
+            var height = pdf.internal.pageSize.getHeight();
+
+            pdf.addImage(img, 'PNG', 0, 0, width, height);
+            pdf.save("mycross.pdf");
+
         })
     }
     return (
