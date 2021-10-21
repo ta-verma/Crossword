@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { DrawCrossWord } from './drawCrossword/draw'
-import jsPdf from 'jspdf'
-import domtoimage from 'dom-to-image';
-
-
+import jsPDF from "jspdf";
 export default function Generate() {
     const [data, setdata] = useState("")
     // const [wordList, setWordList] = useState([])
@@ -27,8 +24,6 @@ export default function Generate() {
         DrawCrossWord()
     }
 
-
-
     const generatePDF = () => {
         const node = document.querySelector(".crossword");
         document.querySelector(".crossword-buttons").style.visibility = 'hidden'
@@ -43,13 +38,8 @@ export default function Generate() {
 
             pdf.addImage(img, 'PNG', 0, 0, width, height);
             pdf.save("mycross.pdf");
+
         })
-        .catch(function (error) {
-            console.error('oops, something went wrong!', error);
-        });
-        setTimeout(() => {
-            document.querySelector(".crossword-buttons").style.visibility = 'visible'
-        });
     }
     return (
         <>
