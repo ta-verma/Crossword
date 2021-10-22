@@ -40,6 +40,14 @@ export default function SignUp() {
             return "ok"
     }
 
+    const reset = () => {
+        document.getElementById("signupForm").reset()
+        setUsername('')
+        setPassword('')
+        setEmail('')
+        setConfPassword('')
+        setUser('')
+    }
     const register = (e) => {
         e.preventDefault()
         const sec = validate(e)
@@ -53,15 +61,16 @@ export default function SignUp() {
                 var msg = response.data.message
                 if(msg === "ok"){
                     setMessage("Account Created Successfully !")
-                    document.getElementById("signLink").innerHTML = "Click here to Sign in"
                     setIsSuccess(true)
                     setSuccess(true)
-                    document.getElementById("signupForm").reset()
+                    reset()
+                    
                 }
                 else{
                     setMessage(msg)
                     setIsSuccess(false)
                     setSuccess(true)
+                    
                 }
             }).catch((err) => {
                 console.log(err)
@@ -99,7 +108,7 @@ export default function SignUp() {
                                 <div className="card-body p-5">
                                     <h2 className="text-center mb-5">Create an account</h2>
 
-                                    <form>
+                                    <form id="signupForm">
 
                                         <div className="form-outline mb-4">
                                             <input type="text" id="form3Example1cg6" onChange={(e) => { setUser(e.target.value) }} placeholder="Name" className="form-control form-control-lg" required />
@@ -150,7 +159,7 @@ export default function SignUp() {
                                     </form>
                                     {success ? <>
                                         <div id="alert" className={`mt-4 text-center alert ${isSuccess ? "alert-success" : "alert-danger"}`} role="alert">
-                                            {message} <Link to="/signin" id="signLink" className="alert-link"></Link>
+                                            {message} {isSuccess?<Link to="/signin" id="signLink" className="alert-link">Click here to Sign in</Link>:<></>}
                                         </div>
                                     </> : <></>}
                                 </div>

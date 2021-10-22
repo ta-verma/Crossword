@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Recaptcha from 'react-recaptcha'
 import GoogleLogin from 'react-google-login'
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
+
 // import styled from 'styled-components';
+
 
 export default function SignIn() {
     const [username, setUsername] = useState('')
@@ -18,13 +20,13 @@ export default function SignIn() {
     const login = (e) => {
         e.preventDefault()
         if (username !== "" && password !== "") {
-            if (!isRobot)
+            if (!isRobot) {
                 axios.post("https://crossw-server.herokuapp.com/signin", {
                     username: username,
                     password: password
                 }).then((response) => {
                     if (response.data.message) {
-                        // console.log(response.data.message);
+                        console.log(response.data.message);
                         setSuccess(true)
                         setMessage(response.data.message)
 
@@ -33,6 +35,7 @@ export default function SignIn() {
                         window.location.pathname = "/dashboard";
                     }
                 });
+            }
             else {
                 setSuccess(true)
                 setMessage("please verify the captcha")
@@ -63,21 +66,24 @@ export default function SignIn() {
         })
     }
     const responseFailGoogle = (res) => {
-        setSuccess(true)
-        setMessage("Sign in attempt failed !")
+
+        if (res['error'] === "popup_closed_by_user") {
+            setSuccess(true)
+            setMessage("Sign in attempt failed !")
+        }
     }
-    const responseFacebook = (res) => {
-        axios.post("https://crossw-server.herokuapp.com/oauthsignup", {
-            id: res['id'],
-            name: res['name'],
-            email: res['email'],
-            oauth: "facebook",
-            object: JSON.stringify(res)
-        }).then((response) => {
-            localStorage.setItem("isAuthenticated", "true");
-            window.location.pathname = "/dashboard"
-        })
-    }
+    // const responseFacebook = (res) => {
+    //     axios.post("http://localhost:3001/oauthsignup", {
+    //         id: res['id'],
+    //         name: res['name'],
+    //         email: res['email'],
+    //         oauth: "facebook",
+    //         object: JSON.stringify(res)
+    //     }).then((response) => {
+    //         localStorage.setItem("isAuthenticated", "true");
+    //         window.location.pathname = "/dashboard"
+    //     })
+    // }
 
 
     useEffect(() => {
@@ -110,7 +116,7 @@ export default function SignIn() {
                                         buttonText="Sign In with Google"
                                     />
                                 </span>
-                                <span className="col-md-7 col-lg-5 col-xl-5 ">
+                                {/* <span className="col-md-7 col-lg-5 col-xl-5 ">
                                     <FacebookLogin
                                         appId="1052783725543907"
                                         autoLoad={false}
@@ -121,7 +127,7 @@ export default function SignIn() {
                                         </i>}
                                         textButton="&nbsp;&nbsp;Sign In with Facebook"
                                     />
-                                </span>
+                                </span> */}
                             </div>
 
 
@@ -151,7 +157,7 @@ export default function SignIn() {
                                     render="explicit"
                                     verifyCallback={toggleBot}
                                     expiredCallback={toggleBot}
-                                    onloadCallback={() => {}}
+                                // onloadCallback={callThis}
                                 />
                             </div>
                             <div className="d-flex flex-row-reverse mb-4">

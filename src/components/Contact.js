@@ -25,6 +25,9 @@ export default function Contact() {
                     setSuccess(true)
                     setIsSuccess(true)
                     document.getElementById("contactForm").reset()
+                    setName('')
+                    setEmail('')
+                    setMessage('')
                 }
                 else {
                     setResult("Something went wrong.")
