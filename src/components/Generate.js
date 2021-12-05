@@ -36,7 +36,6 @@ export default function Generate() {
     const generatePDF = () => {
         const node = document.querySelector(".crossword");
         document.querySelector(".crossword-buttons").style.visibility = 'hidden'
-        //document.querySelector(".table.crossword-grid").style.max = 'hidden'
         domtoimage.toPng(node)
             .then(function (dataUrl) {
                 var img = new Image();
@@ -85,15 +84,16 @@ export default function Generate() {
                         <button onClick={newCrossWord} class="btn btn-outline-primary mx-5 mt-5" type="button">
                             New CrossWord
                         </button>
+                        <button onClick={generatePDF} class="btn btn-outline-primary mx-5 mt-5" type="button">
+                    save as PDF
+                </button>
                     </>
                 }
 
 
 
 
-                <button onClick={generatePDF} class="btn btn-outline-primary mx-5 mt-5" type="button">
-                    save as PDF
-                </button>
+                
 
                 <div>
                     <div class="crossword"> </div>
