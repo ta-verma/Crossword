@@ -9,7 +9,11 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Account from "./components/Account";
-import Generate from "./components/Generate";
+import Crossword from "./components/Crossword";
+import Create from "./components/Create";
+import Random from "./components/Random";
+import Challenge from "./components/Challenge";
+import View from "./components/View";
 
 function App() {
 
@@ -23,7 +27,11 @@ function App() {
           <Route path="/contact" component={Contact} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/generate" component={Generate} />
+          <Route exact path="/crossword" component={Crossword} />
+          <Route exact path="/crossword/create" component={Create} />
+          <Route exact path="/crossword/random" component={Random} />
+          <Route exact path="/crossword/challenge" component={Challenge} />
+          <Route path="/crossword/:id" component={View} />
           <ProtectedRoute exact path="/dashboard" component={Dashboard} />
           <ProtectedRoute exact path="/account" component={Account} />
         </Switch>

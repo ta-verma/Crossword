@@ -42,7 +42,7 @@ export default function Contact() {
             setSuccess(true)
             setIsSuccess(false)
         }
-       
+
 
     }
 

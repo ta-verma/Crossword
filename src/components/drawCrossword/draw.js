@@ -1,69 +1,15 @@
 import $ from 'jquery';
-import { Crossword } from './create';
 
 
-var data = [
-    ["benkelly", 'Broke football color barrier'],
-    ["mayer", "Broke football color barrier"],
-    ["houstonharte", "Award winning University Center"],
-    ["rambouillet", "Dominic’s breed"],
-    ["frisbee", "Join this “ultimate” campus team"],
-    ["softball", "Women pitched their way to World Series runner up"],
-    ["bonfire", "Toastiest homecoming tradition"],
-    ["texas", "Greatest state in the country"],
-    ["dominic", "4-legged mascot"],
-    ["black", "Original school colors: ___ & gold"],
-    ["sajc", "Original initials for the school"],
-    ["anglers", "Champion bass fishers"],
-    ["rugby", "Back to back state champs in this intramural sport"],
-    ["gumtree", "Stickiest spot on campus"],
-    ["oak", "Tree lighting grove"],
-    ["javelin", "2017 National champion in this track & field sport"],
-    ["volleyball", "Spiked a spot in the Elite 8"],
-    ["basketball", "Dribbled to Elite 8"],
-    ["here", "From ___, it’s possible"],
-    ["hunter", "Newest academic building: ___ Strain"],
-    ["may", "April showers bring this Dr’s Flowers"],
-    ["mechanical", "New engineering degree on campus in 2018"],
-    ["gold", "Not silver but ___"],
-    ["legrand", "Football’s home"],
-    ["roscoe", "Fuzzy horned mascot"],
-    ["ramjam", "Not ram jelly but ___"],
-    ["bella", "She gets all women’s teams ramped up"],
-    ["blue", "We are True ___"],
-    ["library", "Celebrating 50 years on campus"],
-    ["carr", "Oldest residence hall on campus"],
-    ["archer", "New College of Health and Human Services Building"],
-    ["ramfam", "Brothers & sisters, faculty & staff"],
-    ["tennis", "Newest women’s sport"],
-    ["mall", "Not for shopping but walking"]
-]
-
-const shuffled = data.sort(() => 0.5 - Math.random());
-let selected = shuffled.slice(0, Math.random() * (shuffled.length - 5) + 5);
-
-
-export const DrawCrossWord = (data=selected) => {
+export const DrawCrossWord = (data) => {
     $(".crossword").empty();
-    var wordss = Crossword(data);
-    var wordslist = wordss.location;
+    // data = Crossword(data);
 
-    var words = new Array();
+    var words = data["wordLoc"];
 
-    for (var i = 0; i < wordss.location.length; i++) {
-        words.push({
-            number: i + 1,
-            direction: wordslist[i].across ? "across" : "down",
-            row: wordslist[i].yPos + 1,
-            column: wordslist[i].xPos + 1,
-            clue: wordslist[i].clue,
-            answer: wordslist[i].wrd,
-        })
-    }
-
-    console.log(words)
+    // console.log(data)
     // Set global variables
-    var gridSize = [wordss["width"] + 1, wordss["length"] + 1];     // number of squares wide, number of squares tall
+    var gridSize = [data["width"] + 1, data["length"] + 1];     // number of squares wide, number of squares tall
     var direction = 'across';   // set initial direction to 'across'
     var markCorrect = true;     // indicates ability for answers to be marked correct. will be set to false if "show answers" is clicked
     var successShown = false;   // indicates whether the success modal has been shown
@@ -72,10 +18,10 @@ export const DrawCrossWord = (data=selected) => {
     // set up the base grid
     var $crosswordPuzzle = $('<div class="crossword-puzzle"></div>');
     var $table = $('<table class="crossword-grid"></table>');
-    for (i = 0; i < gridSize[1]; i++) {
+    for (let i = 0; i < gridSize[1]; i++) {
         var $row = $('<tr class="grid-row"></tr>');
         for (var j = 0; j < gridSize[0]; j++) {
-            $square = $('<td class="grid-square"></td>');
+            var $square = $('<td class="grid-square"></td>');
             $square.appendTo($row);
         }
         $row.appendTo($table);
@@ -84,11 +30,11 @@ export const DrawCrossWord = (data=selected) => {
     }
 
     // Add the fields to the grid
-    for (i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
         var row = words[i].row;
         var column = words[i].column;
         for (j = 0; j < words[i].answer.length; j++) {
-            var $square = $('.grid-row').eq(row - 1).find('.grid-square').eq(column - 1);
+            $square = $('.grid-row').eq(row - 1).find('.grid-square').eq(column - 1);
             var title = words[i].clue + ', letter ' + (j + 1) + ' of ' + words[i].answer.length;
             var id = (words[i].direction === 'across' ? 'a' : 'd') + '-' + words[i].number + '-' + (j + 1);
             if (j === 0 && $square.find('.word-label').length === 0) {
@@ -107,7 +53,7 @@ export const DrawCrossWord = (data=selected) => {
                 $input.appendTo($square);
                 $square.addClass('active');
             } else {
-                var $input = $square.find('input');
+                $input = $square.find('input');
                 $input.attr('title', $input.attr('title') + '; ' + title);
                 $input.attr('id', $input.attr('id') + '+' + id);
                 if (words[i].direction === 'across') {
@@ -130,12 +76,12 @@ export const DrawCrossWord = (data=selected) => {
     var $crosswordClues = $('<div class="crossword-clues col-md-12 col-lg-12"><div class="row"></div></div>');
     var $acrossClues = $('<div class="across-clues col-sm-6 col-md-6"><p><strong>Across</strong></p><ol></ol></div>');
     var $downClues = $('<div class="down-clues col-sm-6 col-md-6"><p><strong>Down</strong></p><ol></ol></div>');
-    for (i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
         var $clue = $('<li value="' + words[i].number + '" data-direction="' + words[i].direction + '" data-clue="' + words[i].number + '"><label>' + words[i].clue + ' </label></li>');
         $clue.find('label').attr('for', $('[data-' + words[i].direction + '=' + words[i].number + ']').eq(0).attr('id'));
-        $clue.on('click', function () {
-            direction = $(this).data('direction');
-        })
+        // $clue.on('click', function () {
+        //     // var direction = $(this).data('direction');
+        // })
         if (words[i].direction === 'across') {
             $clue.appendTo($acrossClues.find('ol'));
         } else {
@@ -147,7 +93,7 @@ export const DrawCrossWord = (data=selected) => {
     $crosswordClues.appendTo('.crossword');
 
     // Add reset, and show answers buttons
-    var $puzzleButtons = $('<div class="crossword-buttons"></div>');
+    var $puzzleButtons = $('<div class="crossword-buttons sticky-bottom bg-white"></div>');
     var $resetButton = $('<button class="btn btn-default">Clear Puzzle</button>');
     $resetButton.on('click', function (e) {
         e.preventDefault();
@@ -284,7 +230,7 @@ export const DrawCrossWord = (data=selected) => {
             }
         }
         if ($('.grid-square.active:not([class*=correct])').length === 0 && !successShown) {
-            $('#success-modal').modal();
+            // $('#success-modal').modal();
             successShown = true;
         }
     }
@@ -320,7 +266,7 @@ export const DrawCrossWord = (data=selected) => {
     // If there is a letter square before or after the current letter in the current direction, keep global direction the same, otherwise switch global direction
     function getDirection($current) {
         if (getPrevLetter($current) || getNextLetter($current)) {
-            direction = direction;
+            // direction = direction;
         } else {
             direction = (direction === 'across') ? 'down' : 'across';
         }

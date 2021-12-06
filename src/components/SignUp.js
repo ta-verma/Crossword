@@ -59,18 +59,18 @@ export default function SignUp() {
                 password: password
             }).then((response) => {
                 var msg = response.data.message
-                if(msg === "ok"){
+                if (msg === "ok") {
                     setMessage("Account Created Successfully !")
                     setIsSuccess(true)
                     setSuccess(true)
                     reset()
-                    
+
                 }
-                else{
+                else {
                     setMessage(msg)
                     setIsSuccess(false)
                     setSuccess(true)
-                    
+
                 }
             }).catch((err) => {
                 console.log(err)
@@ -83,9 +83,9 @@ export default function SignUp() {
         }
     }
 
-  
+
     const toggleBot = () => {
-        isRobot ? setIsRobot(false):setIsRobot(true)
+        isRobot ? setIsRobot(false) : setIsRobot(true)
     }
     useEffect(() => {
         const isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -147,7 +147,7 @@ export default function SignUp() {
                                                 render="explicit"
                                                 verifyCallback={toggleBot}
                                                 expiredCallback={toggleBot}
-                                                onloadCallback={()=>{}}
+                                                onloadCallback={() => { }}
                                             />
                                         </div>
                                         <div className="d-flex justify-content-center">
@@ -159,7 +159,7 @@ export default function SignUp() {
                                     </form>
                                     {success ? <>
                                         <div id="alert" className={`mt-4 text-center alert ${isSuccess ? "alert-success" : "alert-danger"}`} role="alert">
-                                            {message} {isSuccess?<Link to="/signin" id="signLink" className="alert-link">Click here to Sign in</Link>:<></>}
+                                            {message} {isSuccess ? <Link to="/signin" id="signLink" className="alert-link">Click here to Sign in</Link> : <></>}
                                         </div>
                                     </> : <></>}
                                 </div>

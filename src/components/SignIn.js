@@ -5,8 +5,6 @@ import Recaptcha from 'react-recaptcha'
 import GoogleLogin from 'react-google-login'
 // import FacebookLogin from 'react-facebook-login';
 
-// import styled from 'styled-components';
-
 
 export default function SignIn() {
     const [username, setUsername] = useState('')
@@ -93,6 +91,8 @@ export default function SignIn() {
         }
         axios.get("https://crossw-server.herokuapp.com/signin").then((response) => {
             if (response.data.loggedIn === true) {
+                // window.location.pathname = "/dashboard";
+                console.log(response.data)
             }
         });
     }, []);
@@ -106,16 +106,16 @@ export default function SignIn() {
                     <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                         <h3 className="py-4">  Sign In to you Account</h3>
                         <form>
-                            <div className="row d-flex justify-content-center" >
-                                <span className="col-md-7 col-lg-6 col-xl-5 ">
-                                    <GoogleLogin
-                                        clientId="423957503910-f9jtmoks9tlkusbi3gurkbgp9ul87gmv.apps.googleusercontent.com"
-                                        onSuccess={responseGoogle}
-                                        onFailure={responseFailGoogle}
-                                        cookiePolicy={'single_host_origin'}
-                                        buttonText="Sign In with Google"
-                                    />
-                                </span>
+                            <div className="d-flex justify-content-center" >
+                                {/* <span className="col-md-7 col-lg-6 col-xl-5 "> */}
+                                <GoogleLogin
+                                    clientId="423957503910-f9jtmoks9tlkusbi3gurkbgp9ul87gmv.apps.googleusercontent.com"
+                                    onSuccess={responseGoogle}
+                                    onFailure={responseFailGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    buttonText="Sign In with Google"
+                                />
+                                {/* </span> */}
                                 {/* <span className="col-md-7 col-lg-5 col-xl-5 ">
                                     <FacebookLogin
                                         appId="1052783725543907"

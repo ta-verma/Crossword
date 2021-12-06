@@ -2,7 +2,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-function ProtectedRoute({component: Component, ...restOfProps }) {
+function ProtectedRoute({ component: Component, ...restOfProps }) {
 
     const isAuthenticated = localStorage.getItem("isAuthenticated");
     // const [loginStatus, setLoginStatus] = useState(false)

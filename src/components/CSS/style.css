@@ -110,3 +110,23 @@ table.crossword-grid {
   left: 0;
   top: 0.1em;
 }
+
+@media print {
+  @page { margin: 2rem; }
+  body { margin: 1.6cm; }
+  body * {
+    visibility: hidden;
+  }
+  #crswrd, #crswrd * {
+    visibility: visible;  
+  }
+  .crossword-buttons *{
+    display: none;
+  }
+  #crswrd {
+    overflow:visible; 
+    position:fixed !important; 
+    top:0;
+    left:0;
+  }
+}
