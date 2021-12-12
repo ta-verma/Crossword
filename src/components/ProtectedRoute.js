@@ -8,7 +8,7 @@ function ProtectedRoute({ component: Component, ...restOfProps }) {
     // const [loginStatus, setLoginStatus] = useState(false)
 
     // useEffect(() => {
-    //     axios.get("http://localhost:3001/signin").then((response) => {
+    //     axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
     //         if (response.data[0].loggedIn === true) {
     //             setLoginStatus(true);
     //             console.log(response)

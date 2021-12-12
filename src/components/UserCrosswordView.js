@@ -1,0 +1,58 @@
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router'
+import { DrawCrossWord } from './drawCrossword/draw';
+import "./CSS/style.css";
+
+export default function UserCrosswordView() {
+    axios.defaults.withCredentials = true;
+    const { user, id } = useParams();
+    useEffect(() => {
+        axios.post(process.env.REACT_APP_SERVER_URL + "/getUserData", {
+            username: user
+        }).then((response) => {
+            if (response.data.message === "data") {
+                const data = response.data.data;
+                data.forEach(element => {
+                    if ((element.id).toString() === id && element.privacy === "Public") {
+                        DrawCrossWord(JSON.parse(element.crossword));
+                    }
+                    else if ((element.id).toString() === id && element.privacy === "Private") {
+                        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
+                            if (response.data.loggedIn === true) {
+                                if (response.data.user[0].username === user) {
+                                    DrawCrossWord(JSON.parse(element.crossword));
+                                }
+                            }
+                            else {
+                                document.getElementById("main").innerHTML = `<div style=" position: relative;
+                                top: 400px;" class="min-vh-100 text-center"><h1>Unauthorized Access</h1></div>`;
+                            }
+                        });
+                    }
+                })
+            }
+            else {
+                console.log(response.data.message);
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    return (
+
+        <div className="container" id="main">
+            <div className="card shadow rounded-3">
+                {/* <div className="card-header">
+                </div> */}
+                <div className="card-body">
+                    <div id="crswrd" className="crossword"> </div>
+                </div>
+                <div className="d-flex justify-content-center mb-3">
+                    <button onClick={() => { window.print(); }} className="btn btn-outline-info mx-1 " type="button">Print</button>
+                </div>
+            </div>
+        </div>
+    )
+}

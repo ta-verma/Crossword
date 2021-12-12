@@ -4,11 +4,18 @@ import { DrawCrossWord } from './drawCrossword/draw'
 import "./CSS/style.css"
 
 export default function Random() {
+    axios.defaults.withCredentials = true;
     const [data, setData] = useState({});
+    const [isLogin, setIsLogin] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
+    const [name, setName] = useState('');
+    const [userFlag, setUserFlag] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+
     const generateRandom = () => {
-        axios.get("https://crossw-server.herokuapp.com/generate")
+        axios.get(process.env.REACT_APP_SERVER_URL + "/generate")
             .then((response) => {
-                // console.log(response.data.result)
                 setData(response.data.result)
                 DrawCrossWord(response.data.result)
             }).catch((err) => {
@@ -17,7 +24,8 @@ export default function Random() {
     }
 
     const saveToDB = () => {
-        axios.post("https://crossw-server.herokuapp.com/save", {
+        setUserFlag(false)
+        axios.post(process.env.REACT_APP_SERVER_URL + "/save", {
             data: data
         }).then((response) => {
             document.getElementById("shareableLink").value = window.location.origin + "/crossword/" + response.data.id
@@ -26,11 +34,39 @@ export default function Random() {
         })
     }
 
+
+    const savePuzzel = () => {
+        axios.post(process.env.REACT_APP_SERVER_URL + "/savePuzzle", {
+            data: data,
+            username: userDetails.username,
+            name: name
+        }).then((response) => {
+            console.log(response.data)
+            setSuccess(true)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const savePuzzelUtil = () => {
+        setUserFlag(true)
+    }
+
     useEffect(() => {
+
         document.getElementById('crswrd').innerHTML = ''
         window.scrollTo(0, 0);
         generateRandom()
-        // console.log(data)
+        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
+            console.log(response.data);
+            if (response.data.loggedIn === true) {
+                setIsLogin(true);
+                setUserDetails(response.data.user[0])
+            }
+            else {
+                console.log("not logged in")
+            }
+        });
     }, [])
 
     return (
@@ -41,12 +77,13 @@ export default function Random() {
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="shareModalLabel">Shareable Link</h5>
+                                <h5 className="modal-title" id="shareModalLabel">{userFlag ? <>Enter Crossword Name</> : <>Shareable Link</>}</h5>
                             </div>
                             <div className="modal-body">
-                                <input type="text" id="shareableLink" className="form-control" />
+                                <input type="text" onChange={(e) => { setName(e.target.value) }} id="shareableLink" className="form-control" />
                             </div>
-                            <div className="modal-footer">
+                            <div className="modal-footer" id="modal-footer">
+                                {userFlag ? <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={savePuzzel}>Save</button> : null}
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -62,8 +99,10 @@ export default function Random() {
                     <div className="d-flex justify-content-center mb-3">
                         <button onClick={() => { window.print(); }} className="btn btn-outline-info mx-1 " type="button">Print</button>
                         <button type="button" onClick={saveToDB} data-bs-toggle="modal" data-bs-target="#shareModal" className="btn btn-outline-info mx-1 ">Share</button>
+                        {isLogin ? <button type="button" onClick={savePuzzelUtil} data-bs-toggle="modal" data-bs-target="#shareModal" className="btn btn-outline-info mx-1 ">Save</button> : null}
                     </div>
                 </div>
+                {success ? <div><div className="alert alert-info text-center" role="alert" id="s-alert">Saved Successfully!</div></div> : null}
             </div>
         </div>
     )

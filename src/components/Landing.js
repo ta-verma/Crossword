@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import homeimg from '../img/home.jpg';
-
+import axios from 'axios';
 export default function Landing() {
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
+
+            console.log(response.data);
+            if (response.data.loggedIn === true) {
+                // window.location.pathname = "/dashboard";
+                console.log(response.data)
+            }
+            else {
+                console.log("not logged in")
+            }
+        });
+    }, []);
+
     return (
         <div>
             <div className="container col-xxl-8 px-4 py-5">

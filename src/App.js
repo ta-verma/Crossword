@@ -14,6 +14,7 @@ import Create from "./components/Create";
 import Random from "./components/Random";
 import Challenge from "./components/Challenge";
 import View from "./components/View";
+import UserCrosswordView from "./components/UserCrosswordView";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/crossword/random" component={Random} />
           <Route exact path="/crossword/challenge" component={Challenge} />
           <Route path="/crossword/:id" component={View} />
+          <Route path="/:user/:id" component={UserCrosswordView} />
           <ProtectedRoute exact path="/dashboard" component={Dashboard} />
           <ProtectedRoute exact path="/account" component={Account} />
         </Switch>

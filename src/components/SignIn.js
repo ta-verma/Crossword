@@ -19,7 +19,7 @@ export default function SignIn() {
         e.preventDefault()
         if (username !== "" && password !== "") {
             if (!isRobot) {
-                axios.post("https://crossw-server.herokuapp.com/signin", {
+                axios.post(process.env.REACT_APP_SERVER_URL + "/signin", {
                     username: username,
                     password: password
                 }).then((response) => {
@@ -27,7 +27,6 @@ export default function SignIn() {
                         console.log(response.data.message);
                         setSuccess(true)
                         setMessage(response.data.message)
-
                     } else {
                         localStorage.setItem("isAuthenticated", "true");
                         window.location.pathname = "/dashboard";
@@ -52,7 +51,7 @@ export default function SignIn() {
     }
 
     const responseGoogle = (res) => {
-        axios.post("https://crossw-server.herokuapp.com/oauthsignup", {
+        axios.post(process.env.REACT_APP_SERVER_URL + "/oauthsignup", {
             id: res.profileObj['googleId'],
             name: res.profileObj['name'],
             email: res.profileObj['email'],
@@ -71,7 +70,7 @@ export default function SignIn() {
         }
     }
     // const responseFacebook = (res) => {
-    //     axios.post("http://localhost:3001/oauthsignup", {
+    //     axios.post(process.env.REACT_APP_SERVER_URL + "/oauthsignup", {
     //         id: res['id'],
     //         name: res['name'],
     //         email: res['email'],
@@ -89,7 +88,7 @@ export default function SignIn() {
         if (isAuthenticated) {
             window.location.pathname = "/dashboard";
         }
-        axios.get("https://crossw-server.herokuapp.com/signin").then((response) => {
+        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
             if (response.data.loggedIn === true) {
                 // window.location.pathname = "/dashboard";
                 console.log(response.data)

@@ -1,19 +1,21 @@
 // import axios from 'axios';
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import axios from 'axios';
 
 export default function Header(props) {
     const isAuthenticated = localStorage.getItem("isAuthenticated");
     const logout = () => {
-        localStorage.clear();
-        window.location.pathname = "/"
-        // axios.defaults.withCredentials = true
-        // axios.get("http://localhost:3001/logout").then((response) => {
-        //     if (response.data.loggedIn === false)
-        //         window.location.pathname = "/"
-        // }).catch((err) => {
-        //     console.log(err)
-        // })
+       
+        axios.defaults.withCredentials = true
+        axios.get(process.env.REACT_APP_SERVER_URL + "/logout").then((response) => {
+            if (response.data.loggedIn === false){
+            localStorage.clear();
+            window.location.pathname = "/"
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
     }
     return (
 
@@ -36,7 +38,7 @@ export default function Header(props) {
                             <>
                                 <div className="dropdown text-end">
                                     <Link to="#" className="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-user"></i>
+                                        <i className="fas fa-user"></i>
                                     </Link>
                                     <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                         <li><NavLink className="dropdown-item" to="/dashboard">Dashboard</NavLink></li>

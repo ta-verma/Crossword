@@ -52,7 +52,7 @@ export default function SignUp() {
         e.preventDefault()
         const sec = validate(e)
         if (sec === "ok") {
-            axios.post("https://crossw-server.herokuapp.com/signup", {
+            axios.post(process.env.REACT_APP_SERVER_URL + "/signup", {
                 username: username,
                 user: user,
                 email: email,
@@ -92,7 +92,7 @@ export default function SignUp() {
         if (isAuthenticated) {
             window.location.pathname = "/dashboard";
         }
-        axios.get("https://crossw-server.herokuapp.com/signin").then((response) => {
+        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
             if (response.data.loggedIn === true) {
             }
         });

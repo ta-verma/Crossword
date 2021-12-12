@@ -8,7 +8,7 @@ export default function View() {
     const { id } = useParams();
 
     const generateView = () => {
-        axios.get(`https://crossw-server.herokuapp.com/getCrossword`, {
+        axios.get(process.env.REACT_APP_SERVER_URL + `/getCrossword`, {
             params: {
                 id: id
             }

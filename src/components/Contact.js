@@ -14,7 +14,7 @@ export default function Contact() {
     const submitFeedback = (e) => {
         e.preventDefault()
         if (name !== "" && email !== "" && message !== "" && isRobot === false) {
-            axios.post("https://crossw-server.herokuapp.com/contact", {
+            axios.post(process.env.REACT_APP_SERVER_URL + "/contact", {
                 name: name,
                 email: email,
                 message: message,
