@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
     axios.defaults.withCredentials = true;
@@ -13,7 +13,7 @@ export default function Dashboard() {
                 axios.post(process.env.REACT_APP_SERVER_URL + "/getUserData", {
                     username: response.data.user[0].username
                 }).then((response) => {
-                    if(response.data.message === "data") {
+                    if (response.data.message === "data") {
                         setData(response.data.data);
                         setDataFlag(true);
                     }
@@ -41,61 +41,64 @@ export default function Dashboard() {
                 </div>
                 <div className="card-body">
                     {dataFlag ?
-                    <div style={{maxHeight:"1000px"}} className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Crossword Name</th>
-                                    <th scope="col">Privacy</th>
-                                    {/* <th scope="col">Crossword</th> */}
-                                    <th scope="col">Action</th>
-                                    <th scope="col">View</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { data?<>{data.map((item, index) => {
-                                    return (
-                                        <React.Fragment key={index}>
-                                            <tr key={index+1}>
-                                                <th scope="row">{index + 1}</th>
-                                                <td>{item.name}</td>
-                                                <td><button style={{border:"0"}} onClick={()=>{
-                                                    console.log(item.privacy)
-                                                    axios.post(process.env.REACT_APP_SERVER_URL + "/togglePrivacy", {
-                                                        id: item.id,
-                                                        privacy: item.privacy === "Public" ? "Private" : "Public"
-                                                    }).then((response) => {
-                                                        // console.log(response.data)
-                                                        if(response.data.message === "changed") {
-                                                            loadData();
-                                                        }
-                                                    }).catch((error) => {
-                                                        console.log(error)
-                                                    })
-                                                }}>{item.privacy === "Private" ? <span className="badge bg-danger p-2" >Private</span>:
-                                                <span className="badge bg-success p-2" >Public</span>}</button></td>
-                                                <td>
-                                                    <button className="btn btn-danger" onClick={()=>{
-                                                        axios.post(process.env.REACT_APP_SERVER_URL + "/deleteCrossword", {
-                                                            id: item.id
+                        <div style={{ maxHeight: "1000px" }} className="table-responsive">
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Crossword Name</th>
+                                        <th scope="col">Privacy</th>
+                                        {/* <th scope="col">Crossword</th> */}
+                                        <th scope="col">Action</th>
+                                        <th scope="col">View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data ? <>{data.map((item, index) => {
+                                        return (
+                                            <React.Fragment key={index}>
+                                                <tr key={index + 1}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{item.name}</td>
+                                                    <td><button style={{ border: "0" }} onClick={() => {
+                                                        console.log(item.privacy)
+                                                        axios.post(process.env.REACT_APP_SERVER_URL + "/togglePrivacy", {
+                                                            id: item.id,
+                                                            privacy: item.privacy === "Public" ? "Private" : "Public"
                                                         }).then((response) => {
-                                                            console.log(response.data)
-                                                            loadData();
-                                                            // document.location.reload(true);
+                                                            // console.log(response.data)
+                                                            if (response.data.message === "changed") {
+                                                                loadData();
+                                                            }
                                                         }).catch((error) => {
                                                             console.log(error)
                                                         })
-                                                    }} >Delete</button>
-                                                </td>
-                                                <td><Link to={`${item.username}/${item.id}`}>View</Link></td>
-                                            </tr>
-                                        </React.Fragment>
-                                    )
-                                })}</>:null}
-                            </tbody>
-                        </table>
-                    </div> : <> <div><h1>No data found</h1></div></>}
+                                                    }}>{item.privacy === "Private" ? <span className="badge bg-danger p-2" >Private</span> :
+                                                        <span className="badge bg-success p-2" >Public</span>}</button></td>
+                                                    <td>
+                                                        <button className="btn btn-danger" onClick={() => {
+                                                            axios.post(process.env.REACT_APP_SERVER_URL + "/deleteCrossword", {
+                                                                id: item.id
+                                                            }).then((response) => {
+                                                                console.log(response.data)
+                                                                loadData();
+                                                                // document.location.reload(true);
+                                                            }).catch((error) => {
+                                                                console.log(error)
+                                                            })
+                                                        }} >Delete</button>
+                                                    </td>
+                                                    <td>
+                                                        {/* <Link to={`${item.username}/${item.id}`}>View</Link> */}
+                                                        <a target="_blank" href={`${item.username}/${item.id}`} rel="noreferrer">View</a>
+                                                    </td>
+                                                </tr>
+                                            </React.Fragment>
+                                        )
+                                    })}</> : null}
+                                </tbody>
+                            </table>
+                        </div> : <> <div><h1>No data found</h1></div></>}
                 </div>
             </div>
         </div>
