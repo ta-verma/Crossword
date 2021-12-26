@@ -26,7 +26,7 @@ export default function Challenge() {
     let datas = {};
     
     const expiryTimestamp = new Date()
-    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 30);
+    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 900);
 
     const {
         seconds,
