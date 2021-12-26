@@ -143,7 +143,7 @@ export default function SignUp() {
                                         </div>
                                         <div className="form-outline d-flex justify-content-center mb-4">
                                             <Recaptcha
-                                                sitekey="6Lc2rOMcAAAAADZMnatG2s4hlU_gMCNbkEZozThP"
+                                                sitekey="6LedRs0dAAAAAJdDr6jqIYso77b2AYjBe1jIm250"
                                                 render="explicit"
                                                 verifyCallback={toggleBot}
                                                 expiredCallback={toggleBot}
