@@ -42,9 +42,9 @@ export default function Header(props) {
                             <li><NavLink className="nav-link px-2 link-dark" to="/contact">Contact Us</NavLink></li>
                         </ul>
 
-                        <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        {/* <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                             <input type="search" className="form-control" placeholder="Search..." aria-label="Search" />
-                        </form>
+                        </form> */}
                         {isAuthenticated ?
                             <>
                                 <div className="dropdown text-end">

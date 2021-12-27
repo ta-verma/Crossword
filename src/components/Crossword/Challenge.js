@@ -177,12 +177,12 @@ export default function Challenge() {
                 <div class="modal-dialog modal-fullscreen">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Task Failed Successfully</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Task Failed</h5>
                         </div>
                         <div class="modal-body">
-                            <div className="failed_img">
+                            {/* <div className="failed_img">
                                 <img src='https://miro.medium.com/max/1274/1*ON_d7DWgW8g8uu3EBntfNw.png' alt='failed' />
-                            </div>
+                            </div> */}
                         </div>
                         <div class="modal-footer">
                             <Link type="button" to="/crossword" className="btn btn-primary btn-lg px-4 me-md-2">Home</Link>
