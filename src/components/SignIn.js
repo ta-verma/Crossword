@@ -152,7 +152,7 @@ export default function SignIn() {
                             </> : <></>}
                             <div className="form-outline d-flex justify-content-center mb-4">
                                 <Recaptcha
-                                    sitekey="6Lc2rOMcAAAAADZMnatG2s4hlU_gMCNbkEZozThP"
+                                    sitekey="6Lc7VM0dAAAAAEOX79IhxEPqE_SXArlKe3kP3_Ty"
                                     render="explicit"
                                     verifyCallback={toggleBot}
                                     expiredCallback={toggleBot}
