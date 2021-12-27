@@ -17,7 +17,7 @@ import View from "./components/Helper/View";
 import UserCrosswordView from "./components/Helper/UserCrosswordView";
 import Error from "./components/Helper/Error";
 import ChallengeView from "./components/Helper/ChallengeView";
-import AboutUs from "./components/Public/about";
+import AboutUs from "./components/Public/About";
 
 function App() {
 
