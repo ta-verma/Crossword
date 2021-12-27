@@ -17,6 +17,7 @@ import View from "./components/Helper/View";
 import UserCrosswordView from "./components/Helper/UserCrosswordView";
 import Error from "./components/Helper/Error";
 import ChallengeView from "./components/Helper/ChallengeView";
+import AboutUs from "./components/Public/about";
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
           <ProtectedRoute exact path="/dashboard" component={Dashboard} />
           <ProtectedRoute exact path="/account" component={Account} />
           <Route exact path="/:user/:id" component={UserCrosswordView} />
+          <Route exact path="/about" component={AboutUs} />
           <Route component={Error} />
         </Switch>
         <Footer />
