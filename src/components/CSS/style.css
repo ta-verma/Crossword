@@ -130,3 +130,10 @@ table.crossword-grid {
     left:0;
   }
 }
+
+
+.failed_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
