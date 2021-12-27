@@ -43,7 +43,7 @@ export default function Dashboard() {
                     {dataFlag ?
                         <div style={{ maxHeight: "1000px" }} className="table-responsive">
                             <table className="table table-striped">
-                                <thead>
+                                <thead className=" sticky-top bg-white shadow">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Crossword Name</th>
@@ -60,8 +60,11 @@ export default function Dashboard() {
                                                 <tr key={index + 1}>
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{item.name}</td>
-                                                    <td><button style={{ border: "0" }} onClick={() => {
-                                                        console.log(item.privacy)
+                                                    <td><button style={{ border: "0", backgroundColor:"transparent" }} onClick={(e) => {
+                                                        e.target.disabled = true;
+
+
+                                                        // console.log(item.privacy)
                                                         axios.post(process.env.REACT_APP_SERVER_URL + "/togglePrivacy", {
                                                             id: item.id,
                                                             privacy: item.privacy === "Public" ? "Private" : "Public"
@@ -69,6 +72,7 @@ export default function Dashboard() {
                                                             // console.log(response.data)
                                                             if (response.data.message === "changed") {
                                                                 loadData();
+                                                                e.target.disabled = false;
                                                             }
                                                         }).catch((error) => {
                                                             console.log(error)

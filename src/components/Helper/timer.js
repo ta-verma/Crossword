@@ -1,14 +1,14 @@
 import React from "react";
-import { useStopwatch } from "react-timer-hook";
+import { useTimer } from "react-timer-hook";
 
-function MyStopwatch() {
+export default function Timer({ expiryTimestamp, onExp }) {
   //const stopwatchOffset = new Date();
  // stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);
   const {
     seconds,
     minutes,
     hours   
-  } = useStopwatch({ autoStart: true });
+  } = useTimer({ expiryTimestamp, onExpire: () => onExp() });
   const hourTime = hours < 10 ? `0${hours}` : `${hours}`;
   const secondTime = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const minuteTime = minutes < 10 ? `0${minutes}` : `${minutes}`;
@@ -19,14 +19,6 @@ function MyStopwatch() {
         <span>{hourTime}</span>:<span>{minuteTime}</span>:
         <span>{secondTime}</span>
       </div>
-    </div>
-  );
-}
-
-export default function App() {
-  return (
-    <div>
-      <MyStopwatch />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import homeimg from '../img/home.jpg';
+import homeimg from '../../img/home.jpg';
 import axios from 'axios';
 export default function Landing() {
 

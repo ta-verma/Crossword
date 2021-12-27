@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { DrawCrossWord } from './drawCrossword/draw'
-import "./CSS/style.css";
+import { DrawCrossWord } from '../DrawCrossword/Draw'
+import "../CSS/style.css";
 import axios from 'axios';
 
 export default function Create() {

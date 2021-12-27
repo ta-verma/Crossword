@@ -1,22 +1,32 @@
-// import axios from 'axios';
-import React from 'react'
+import React from 'react';
+import { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom'
 import axios from 'axios';
 
 export default function Header(props) {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+    axios.defaults.withCredentials = true
     const logout = () => {
-       
-        axios.defaults.withCredentials = true
         axios.get(process.env.REACT_APP_SERVER_URL + "/logout").then((response) => {
             if (response.data.loggedIn === false){
-            localStorage.clear();
-            window.location.pathname = "/"
+            document.location.href = "/"
             }
         }).catch((err) => {
             console.log(err)
         })
     }
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
+            console.log(response.data);
+            if (response.data.loggedIn === true) {
+                setIsAuthenticated(true);
+            }
+            else {
+                setIsAuthenticated(false);
+            }
+        });
+    }, [])
     return (
 
         <>
@@ -26,7 +36,8 @@ export default function Header(props) {
                         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                             <li><NavLink className="nav-link px-2 link-dark navbar-brand" to="/">CrossWord</NavLink></li>
                             <li><NavLink className="nav-link px-2 link-dark active" to="/">Home</NavLink></li>
-                            <li><NavLink className="nav-link px-2 link-dark" to="/crossword">Generate Crossword</NavLink></li>
+                            <li><NavLink className="nav-link px-2 link-dark" to="/crossword">Generate</NavLink></li>
+                            <li><NavLink className="nav-link px-2 link-dark" to="/contest">Contest</NavLink></li>
                             <li><NavLink className="nav-link px-2 link-dark" to="/about">About Us</NavLink></li>
                             <li><NavLink className="nav-link px-2 link-dark" to="/contact">Contact Us</NavLink></li>
                         </ul>
@@ -41,10 +52,10 @@ export default function Header(props) {
                                         <i className="fas fa-user"></i>
                                     </Link>
                                     <ul className="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                        <li><NavLink className="dropdown-item" to="/dashboard">Dashboard</NavLink></li>
-                                        <li><NavLink className="dropdown-item" to="/account">Account</NavLink></li>
+                                        <li><NavLink className="dropdown-item bg-transparent text-dark" to="/dashboard">Dashboard</NavLink></li>
+                                        <li><NavLink className="dropdown-item bg-transparent text-dark" to="/account">Account</NavLink></li>
                                         <li><hr className="dropdown-divider" /></li>
-                                        <li><NavLink className="dropdown-item" onClick={logout} to="/">Sign Out</NavLink></li>
+                                        <li><NavLink className="dropdown-item bg-transparent text-dark" onClick={logout} to="/">Sign Out</NavLink></li>
                                     </ul>
                                 </div>
                             </>

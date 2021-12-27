@@ -1,12 +1,13 @@
 import $ from 'jquery';
 
 
-export const DrawCrossWord = (data) => {
+
+export const DrawCrossWord = (data, dispans=true, onsolved=() => alert("solved")) => {
     $(".crossword").empty();
     // data = Crossword(data);
-
+    
     var words = data["wordLoc"];
-
+    
     // console.log(data)
     // Set global variables
     var gridSize = [data["width"] + 1, data["length"] + 1];     // number of squares wide, number of squares tall
@@ -14,7 +15,7 @@ export const DrawCrossWord = (data) => {
     var markCorrect = true;     // indicates ability for answers to be marked correct. will be set to false if "show answers" is clicked
     var successShown = false;   // indicates whether the success modal has been shown
     // var $clueTooltip = $('<div class="clue-tooltip invisible"><div class="clue-tooltip-arrow"></div><div class="clue-tooltip-text"></div></div>').appendTo('.crossword');
-
+    
     // set up the base grid
     var $crosswordPuzzle = $('<div class="crossword-puzzle"></div>');
     var $table = $('<table class="crossword-grid"></table>');
@@ -28,7 +29,7 @@ export const DrawCrossWord = (data) => {
         $table.appendTo($crosswordPuzzle);
         $crosswordPuzzle.appendTo('.crossword');
     }
-
+    
     // Add the fields to the grid
     for (let i = 0; i < words.length; i++) {
         var row = words[i].row;
@@ -71,7 +72,7 @@ export const DrawCrossWord = (data) => {
             }
         }
     }
-
+    
     // Add the clues to the page
     var $crosswordClues = $('<div class="crossword-clues col-md-12 col-lg-12"><div class="row"></div></div>');
     var $acrossClues = $('<div class="across-clues col-sm-6 col-md-6"><p><strong>Across</strong></p><ol></ol></div>');
@@ -91,7 +92,7 @@ export const DrawCrossWord = (data) => {
     $acrossClues.appendTo($crosswordClues.find('.row'));
     $downClues.appendTo($crosswordClues.find('.row'));
     $crosswordClues.appendTo('.crossword');
-
+    
     // Add reset, and show answers buttons
     var $puzzleButtons = $('<div class="crossword-buttons sticky-bottom bg-white"></div>');
     var $resetButton = $('<button class="btn btn-default">Clear Puzzle</button>');
@@ -102,21 +103,24 @@ export const DrawCrossWord = (data) => {
         markCorrect = true;
     });
     $resetButton.appendTo($puzzleButtons);
-    var $solveButton = $('<button class="show-answers btn btn-default">Show Answers</button>');
-    $solveButton.on('click', function (e) {
-        e.preventDefault();
-        $('input.letter').each(function () {
-            $(this).val($(this).data('letter'));
+    
+    if(dispans === true){
+        var $solveButton = $('<button class="show-answers btn btn-default">Show Answers</button>');
+        $solveButton.on('click', function (e) {
+            e.preventDefault();
+            $('input.letter').each(function () {
+                $(this).val($(this).data('letter'));
+            });
+            markCorrect = false;
         });
-        markCorrect = false;
-    });
-    $solveButton.appendTo($puzzleButtons);
+        $solveButton.appendTo($puzzleButtons);
+    }
     $puzzleButtons.appendTo('.crossword');
-
+    
     // Add the success modal
     var $modal = $('<div class="modal fade" id="success-modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">Congratulations!</h4></div><div class="modal-body"><p>You have finished the puzzle.</p></div></div></div></div>');
     $modal.appendTo('body');
-
+    
     // When a square is focused, highlight the other squares in that word and the clue, and show the tooltip
     $('input.letter').on('focus', function () {
         var $current = $(this);
@@ -125,12 +129,12 @@ export const DrawCrossWord = (data) => {
         getDirection($current);
         $('[data-' + direction + '=' + $current.data(direction) + ']').parent('.grid-square').addClass('current-word');
     })
-
+    
     // When a square is blurred, remove highlight from squares and clue
     $('input.letter').on('blur', function () {
         $('.grid-square').removeClass('current-word');
     })
-
+    
     // handle directional and letter keys in letter inputs
     $('input.letter').on('keyup', function (e) {
         var $current = $(this);
@@ -161,7 +165,7 @@ export const DrawCrossWord = (data) => {
             checkWord($current);
         };
     })
-
+    
     // Tab and Shift/Tab move to next and previous words
     $('input.letter').on('keydown', function (e) {
         var $current = $(this);
@@ -192,7 +196,7 @@ export const DrawCrossWord = (data) => {
             checkWord($current);
         };
     })
-
+    
     // Check if all letters in selected word are correct
     function checkWord($current) {
         var correct;
@@ -230,11 +234,12 @@ export const DrawCrossWord = (data) => {
             }
         }
         if ($('.grid-square.active:not([class*=correct])').length === 0 && !successShown) {
-            // $('#success-modal').modal();
+            //  $('#success-modal').modal();
+            onsolved();
             successShown = true;
         }
     }
-
+    
     // Return the input of the first letter of the next word in the clues list
     function getNextWord($current) {
         var length = $('.crossword-clues li').length;
@@ -248,7 +253,7 @@ export const DrawCrossWord = (data) => {
         direction = nextWord.data('direction');
         return $('[data-' + nextWord.data('direction') + '=' + nextWord.data('clue') + ']').eq(0);
     }
-
+    
     // Return the input of the first letter of the previous word in the clues list
     function getPrevWord($current) {
         var length = $('.crossword-clues li').length;
@@ -262,7 +267,7 @@ export const DrawCrossWord = (data) => {
         direction = prevWord.data('direction');
         return $('[data-' + prevWord.data('direction') + '=' + prevWord.data('clue') + ']').eq(0);
     }
-
+    
     // If there is a letter square before or after the current letter in the current direction, keep global direction the same, otherwise switch global direction
     function getDirection($current) {
         if (getPrevLetter($current) || getNextLetter($current)) {
@@ -271,7 +276,7 @@ export const DrawCrossWord = (data) => {
             direction = (direction === 'across') ? 'down' : 'across';
         }
     }
-
+    
     // Return the input of the previous letter in the current word if it exists, otherwise return false
     function getPrevLetter($current) {
         var index = $('[data-' + direction + '=' + $current.data(direction) + ']').index($current);
@@ -281,7 +286,7 @@ export const DrawCrossWord = (data) => {
             return false;
         }
     }
-
+    
     // Return the input of the next letter in the current word if it exists, otherwise return false
     function getNextLetter($current) {
         var length = $('[data-' + direction + '=' + $current.data(direction) + ']').length;

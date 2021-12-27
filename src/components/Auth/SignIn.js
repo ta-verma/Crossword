@@ -28,8 +28,7 @@ export default function SignIn() {
                         setSuccess(true)
                         setMessage(response.data.message)
                     } else {
-                        localStorage.setItem("isAuthenticated", "true");
-                        window.location.pathname = "/dashboard";
+                        document.location.href = "/dashboard";
                     }
                 });
             }
@@ -84,13 +83,9 @@ export default function SignIn() {
 
 
     useEffect(() => {
-        const isAuthenticated = localStorage.getItem("isAuthenticated");
-        if (isAuthenticated) {
-            window.location.pathname = "/dashboard";
-        }
         axios.get(process.env.REACT_APP_SERVER_URL + "/signin").then((response) => {
             if (response.data.loggedIn === true) {
-                // window.location.pathname = "/dashboard";
+                document.location.href = "/dashboard";
                 console.log(response.data)
             }
         });
@@ -167,8 +162,6 @@ export default function SignIn() {
                             <div className="d-flex justify-content-center ">
                                 <button type="submit" onClick={login} className="btn btn-primary btn-lg btn-block">Sign in</button>
                             </div>
-
-
 
                             <div className="d-flex justify-content-center my-3">
                                 <Link to="/signup" className="link-dark">You don&#x27;t have an account?</Link>

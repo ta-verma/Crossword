@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useParams } from 'react-router'
-import { DrawCrossWord } from './drawCrossword/draw';
-import "./CSS/style.css";
+import { DrawCrossWord } from '../DrawCrossword/Draw';
+import "../CSS/style.css";
 
 export default function View() {
     const { id } = useParams();

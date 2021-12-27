@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { DrawCrossWord } from './drawCrossword/draw';
-import "./CSS/style.css";
+import { DrawCrossWord } from '../DrawCrossword/Draw';
+import "../CSS/style.css";
 
 export default function UserCrosswordView() {
     axios.defaults.withCredentials = true;
@@ -22,6 +22,10 @@ export default function UserCrosswordView() {
                             if (response.data.loggedIn === true) {
                                 if (response.data.user[0].username === user) {
                                     DrawCrossWord(JSON.parse(element.crossword));
+                                }
+                                else {
+                                    document.getElementById("main").innerHTML = `<div style=" position: relative;
+                                top: 400px;" class="min-vh-100 text-center"><h1>Unauthorized Access</h1></div>`;
                                 }
                             }
                             else {

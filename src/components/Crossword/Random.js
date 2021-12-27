@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { DrawCrossWord } from './drawCrossword/draw'
-import "./CSS/style.css"
+import { DrawCrossWord } from '../DrawCrossword/Draw'
+import "../CSS/style.css"
 
 export default function Random() {
     axios.defaults.withCredentials = true;

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import createimg from '../img/create.jpg';
-import challengeimg from '../img/challenge.png';
-import generateimg from '../img/generate.png';
+import createimg from '../../img/create.jpg';
+import challengeimg from '../../img/challenge.png';
+import generateimg from '../../img/generate.png';
 
 export default function Generate() {
     return (
@@ -41,7 +41,7 @@ export default function Generate() {
                         <h1 className="display-5 fw-bold lh-1 mb-3">Take A Challenge</h1>
                         <p className="lead">Up for a challenge? We dare you to solve a puzzle and win against the best time. Create a Score and Share it with others.</p>
                         <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <Link type="button" to="/generate/challenge" className="btn btn-primary btn-lg px-4 me-md-2">Start</Link>
+                            <Link type="button" to="/crossword/challenge" className="btn btn-primary btn-lg px-4 me-md-2">Start</Link>
                         </div>
                     </div>
                 </div>
